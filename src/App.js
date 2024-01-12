@@ -1,41 +1,28 @@
 import React from 'react';
-import {
-  ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
-} from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
+import Providers from './components/provider';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Homepage from './pages/homepage';
+import ProductDetail from './pages/detail';
+import Bucket from './pages/bucket';
 
 function App() {
   return (
-    <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
-      </Box>
-    </ChakraProvider>
+    <Providers>
+      <BrowserRouter>
+        <Routes>
+          <Route path="home">
+            <Route path="" element={<Homepage />} />
+          </Route>
+          <Route path="keranjang">
+            <Route path="" element={<Bucket />} />
+          </Route>
+          <Route path=":id">
+            <Route path="" element={<ProductDetail />} />
+          </Route>
+          <Route path="*" element={<Navigate to="home" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </Providers>
   );
 }
 
